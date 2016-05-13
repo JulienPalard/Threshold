@@ -1,5 +1,5 @@
 
-class Config(Object):
+class Config():
     def __init__(self, request):
         self.request = request
 
