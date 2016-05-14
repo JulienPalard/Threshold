@@ -11,7 +11,8 @@ class MainHandler(tornado.web.RequestHandler):
     ]
 
     @threshold.knock_door(items)
-    def get(self):
+    def get(self, params=None):
+        print(params)
         self.write("Hello, world")
 
 def make_app():
