@@ -2,7 +2,6 @@
 class Config():
     def __init__(self, request):
         self.request = request
-        print(request.request.arguments)
 
     def get_argument(self, name):
         print("name:", name)
