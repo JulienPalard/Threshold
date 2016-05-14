@@ -1,3 +1,4 @@
+from config.tornado_config import Config
 
 class Fliter():
     def __init__(self, argument_item, method):
