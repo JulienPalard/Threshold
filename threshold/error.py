@@ -1,7 +1,13 @@
+import logging
 
-class FilterException(Exception):
-    def __init__(self, argument, message):
-        super.__init__(message)
+class CheckException(Exception):
+    def __init__(self, name, message):
         self.name = name
         self.message = message
-        print("error:", name, "message:", message)
+        logging.error(("error check function:", name, "message:", message))
+
+class AfterHandlerException(Exception):
+    def __init__(self, name, message):
+        self.name = name
+        self.message = message
+        logging.error(("error handle function:", name, "message:", message))

@@ -7,7 +7,7 @@ from threshold.item import ArgumentItem
 class MainHandler(tornado.web.RequestHandler):
 
     items = [
-        ArgumentItem("test", int)
+        ArgumentItem("test", int, check_functions=[(lambda x: x > 100, None, "error message")])
     ]
 
     @threshold.knock_door(items)

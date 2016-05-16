@@ -4,7 +4,6 @@ class Config():
         self.request = request
 
     def get_argument(self, name):
-        print("name:", name)
         return self.request.get_argument(name)
 
     def post_argument(self, name):
