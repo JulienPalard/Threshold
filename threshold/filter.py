@@ -15,6 +15,7 @@ class Filter():
                 argument = self._convert_data_type(argument, argument_item._type)
                 argument_item.value = argument
                 self.check(argument_item)
+                self.after_handler(argument_item)
                 # 将结果添加到结果集中
                 if argument_item.result_name:
                     self.result_param[argument_item.result_name] = argument_item.value
@@ -28,12 +29,24 @@ class Filter():
             return
         for check_function, kwargs, error_message in argument_item.check_functions:
             assert hasattr(check_function, "__call__"), "请设置正确的check function"
+            assert type(kwargs) == type(dict()) or kwargs is None, "kwargs必须是 dict 或者 None"
             if kwargs:
                 if not check_function(argument_item.value, **kwargs):
                     raise CheckException(name=check_function.__name__, message=error_message)
             else:
                 if not check_function(argument_item.value):
                     raise CheckException(name=check_function.__name__, message=error_message)
+
+    def after_handler(self, argument_item):
+        if not argument_item.after_handler_functions:
+            return
+        for after_handler_function, kwargs, error_message in argument_item.after_handler_functions:
+            assert hasattr(after_handler_function, "__call__"), "请设置正确的after handler function"
+            assert type(kwargs) == type(dict()) or kwargs is None, "kwargs必须是 dict 或者 None"
+            if kwargs:
+                argument_item.value = after_handler_function(argument_item.value, **kwargs)
+            else:
+                argument_item.value = after_handler_function(argument_item.value)
 
     def _is_exist_name(self, name): # 是否存在该参数
         pass
@@ -42,5 +55,6 @@ class Filter():
         return _type(value)
 
     def __call__(self):
-        self.parse(self.argument_items[0])
-        return "test"
+        for argument_item in self.argument_items:
+            self.parse(argument_item)
+        return self.result_param

@@ -7,11 +7,12 @@ from threshold.item import ArgumentItem
 class MainHandler(tornado.web.RequestHandler):
 
     items = [
-        ArgumentItem("test", int, check_functions=[(lambda x: x > 100, None, "error message")])
+        ArgumentItem("test", int, check_functions=[(lambda x: x > 100, None, "error message")], after_handler_functions=[((lambda x: x * 10), None, "handler error")])
     ]
 
     @threshold.knock_door(items)
     def get(self, params=None):
+        print("result: ", params)
         self.write("Hello, world")
 
 def make_app():
