@@ -6,7 +6,7 @@ class CheckException(Exception):
         self.message = message
         logging.error(("error check function:", name, "message:", message))
 
-class AfterHandlerException(Exception):
+class NotExistsArgument(Exception):
     def __init__(self, name, message):
         self.name = name
         self.message = message

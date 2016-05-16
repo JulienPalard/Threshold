@@ -1,5 +1,5 @@
 from threshold.config.tornado_config import Config
-from threshold.error import CheckException, AfterHandlerException
+from threshold.error import CheckException, NotExistsArgument
 
 class Filter():
     def __init__(self, argument_items, request):
@@ -9,20 +9,20 @@ class Filter():
 
     def parse(self, argument_item): # 参数解析
         # 得到 argument 的值
-        try:
-            if self.config.is_get_method():
-                argument = self.config.get_argument(argument_item.name)
-                argument = self._convert_data_type(argument, argument_item._type)
-                argument_item.value = argument
-                self.check(argument_item)
-                self.after_handler(argument_item)
-                # 将结果添加到结果集中
-                if argument_item.result_name:
-                    self.result_param[argument_item.result_name] = argument_item.value
-                else:
-                    self.result_param[argument_item.name] = argument_item.value 
-        except Exception as e:
-            raise e
+        if self.config.is_get_method():
+            argument = self.config.get_argument(argument_item.name)
+            if argument is None:
+                if argument_item.require:
+                    raise NotExistsArgument(argument_item.name, argument_item.not_exists_message)
+                if argument_item.default:
+                    self.result_param[argument_item.result_name] = argument_item.default
+                return
+            argument = self._convert_data_type(argument, argument_item._type)
+            argument_item.value = argument
+            self.check(argument_item)
+            self.after_handler(argument_item)
+            # 将结果添加到结果集中
+            self.result_param[argument_item.result_name] = argument_item.value
 
     def check(self, argument_item):
         if not argument_item.check_functions:

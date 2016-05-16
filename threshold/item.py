@@ -9,12 +9,13 @@ class ArgumentItem():
     置值为 default.
     """
 
-    def __init__(self, name, _type, require=True, default=None, result_name=None, check_functions=None, after_handler_functions=None):
+    def __init__(self, name, _type, require=True, default=None, not_exists_message=None, result_name=None, check_functions=None, after_handler_functions=None):
         self.name = name                                         # 参数名
         self._type = _type                                       # 参数类型
         self.require = require                                   # 是否一定存在该参数
         self.default = default                                   # 参数默认值
-        self.result_name = result_name                           # 最后返回给请求处理阶段的参数名称
+        self.not_exists_message = not_exists_message             # 如果不存在该参数时返回的错误信息
+        self.result_name = result_name if result_name else name  # 最后返回给请求处理阶段的参数名称
         self.check_functions = check_functions                   # 参数验证函数元组列表，(function, kwargs, error message)
         self.after_handler_functions = after_handler_functions   # 参数验证通过之后进行处理的函数元组列表, (function, kwargs, error message)
         self.value = None                                        # 验证处理之后的返回值
