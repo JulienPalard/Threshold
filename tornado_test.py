@@ -3,15 +3,13 @@ import tornado.web
 
 import threshold
 from threshold.item import ArgumentItem
+from threshold.utils import Check
 
 class MainHandler(tornado.web.RequestHandler):
 
     items = [
-        ArgumentItem("test", int,
-                     check_functions=[(lambda x: x > 100, None, "error message")],
-                     after_handler_functions=[((lambda x: x * 10), None, "handler error")]
-                 ),
-        ArgumentItem("test1", int, require=False, default=1
+        ArgumentItem("test", str,
+                     check_functions=[(Check.is_phone, None, "phone error")],
                  ),
     ]
 

@@ -1,4 +1,4 @@
-import constants
+from threshold import constants
 
 
 class Check():
