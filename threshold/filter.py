@@ -1,11 +1,10 @@
-from threshold.config.tornado_config import Config
 from threshold.error import CheckException, NotExistsArgument
 
 class Filter():
-    def __init__(self, argument_items, request):
+    def __init__(self, argument_items, request, request_config_class):
         self.result_param = dict()
         self.argument_items = argument_items
-        self.config = Config(request)
+        self.config = request_config_class(request)
 
     def parse(self, argument_item): # 参数解析
         # 得到 argument 的值

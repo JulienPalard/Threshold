@@ -1,5 +1,7 @@
+from threshold.config import BaseConfig
 
-class Config():
+
+class TornadoConfig(BaseConfig):
     def __init__(self, request):
         self.request = request
 
