@@ -11,6 +11,7 @@ class Filter():
         # 得到 argument 的值
         if self.config.is_get_method():
             argument = self.config.get_argument(argument_item.name)
+            # 处理没有的函数
             if argument is None:
                 if argument_item.require:
                     raise NotExistsArgument(argument_item.name, argument_item.not_exists_message)
@@ -24,7 +25,7 @@ class Filter():
             # 将结果添加到结果集中
             self.result_param[argument_item.result_name] = argument_item.value
 
-    def check(self, argument_item):
+    def check(self, argument_item): # 参数验证
         if not argument_item.check_functions:
             return
         for check_function, kwargs, error_message in argument_item.check_functions:
@@ -37,7 +38,7 @@ class Filter():
                 if not check_function(argument_item.value):
                     raise CheckException(name=check_function.__name__, message=error_message)
 
-    def after_handler(self, argument_item):
+    def after_handler(self, argument_item): # 参数验证后处理
         if not argument_item.after_handler_functions:
             return
         for after_handler_function, kwargs, error_message in argument_item.after_handler_functions:
