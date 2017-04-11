@@ -1,7 +1,10 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 from threshold import constants
 
 
-class Check():
+class Check:
     @staticmethod
     def is_email(email):
         return constants.VerifiedExpression.EMAIL_ADDRESS_REG.search(email) is not None

@@ -1,5 +1,9 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 import functools
 from threshold.filter import Filter
+
 
 def knock_door(argument_items, request_config_class):
     def _knock_door(method):

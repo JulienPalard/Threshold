@@ -1,4 +1,8 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 import logging
+
 
 class CheckException(Exception):
     def __init__(self, name, message):

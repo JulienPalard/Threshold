@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 import re
 
-class VerifiedExpression():
+
+class VerifiedExpression:
     EMAIL_ADDRESS_REG = re.compile(
         r"(^[-!#$%&'*+/=?^_`{}|~0-9A-Z]+(\.[-!#$%&'*+/=?^_`{}|~0-9A-Z]+)*"  # dot-atom
         r'|^"([\001-\010\013\014\016-\037!#-\[\]-\177]|\\[\001-\011\013\014\016-\177])*")'

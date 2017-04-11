@@ -1,5 +1,8 @@
+#!/usr/bin/env python
+# coding=utf-8
 
-class BaseConfig():
+
+class BaseConfig:
 
     def __init__(self, request):
         self.request = request

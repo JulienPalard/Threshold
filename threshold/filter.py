@@ -1,6 +1,10 @@
+#!/usr/bin/env python
+# coding=utf-8
+
 from threshold.error import CheckException, NotExistsArgument
 
-class Filter():
+
+class Filter:
     def __init__(self, argument_items, request, request_config_class):
         self.result_param = dict()
         self.argument_items = argument_items
@@ -14,8 +18,7 @@ class Filter():
             if argument is None:
                 if argument_item.require:
                     raise NotExistsArgument(argument_item.name, argument_item.not_exists_message)
-                if argument_item.default:
-                    self.result_param[argument_item.result_name] = argument_item.default
+                if argument_item.default: self.result_param[argument_item.result_name] = argument_item.default
                 return
             argument = self._convert_data_type(argument, argument_item._type)
             argument_item.value = argument
@@ -24,7 +27,7 @@ class Filter():
             # 将结果添加到结果集中
             self.result_param[argument_item.result_name] = argument_item.value
 
-    def check(self, argument_item): # 参数验证
+    def check(self, argument_item):  # 参数验证
         if not argument_item.check_functions:
             return
         for check_function, kwargs, error_message in argument_item.check_functions:
@@ -51,7 +54,7 @@ class Filter():
     def _is_exist_name(self, name): # 是否存在该参数
         pass
 
-    def _convert_data_type(self, value, _type): # 转换参数类型
+    def _convert_data_type(self, value, _type):  # 转换参数类型
         return _type(value)
 
     def __call__(self):
